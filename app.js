@@ -12,6 +12,7 @@ console.log("Culture Archive connected to Supabase");
 const showFormButton = document.getElementById("show-form-button");
 const uploadForm = document.getElementById("upload-form");
 const saveItemButton = document.getElementById("save-item-button");
+const imagesButton = document.getElementById("images-button");
 
 showFormButton.addEventListener("click", () => {
   uploadForm.style.display = "block";
@@ -110,3 +111,37 @@ async function loadLibrary() {
 }
 
 loadLibrary();
+
+imagesButton.addEventListener("click", async () => {
+  const libraryItems = document.getElementById("library-items");
+
+  const { data, error } = await supabaseClient
+    .from("media_items")
+    .select("*")
+    .eq("content_type", "image")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Could not load images:", error);
+    libraryItems.innerHTML = "<p>Could not load images.</p>";
+    return;
+  }
+
+  libraryItems.innerHTML = "";
+
+  data.forEach((item) => {
+    const card = document.createElement("div");
+
+    const { data: publicUrlData } = supabaseClient.storage
+      .from("media")
+      .getPublicUrl(item.file_path);
+
+    card.innerHTML = `
+      <img src="${publicUrlData.publicUrl}" alt="${item.title}" style="max-width: 275px; height: auto;">
+      <h3>${item.title}</h3>
+      <p>${item.description || ""}</p>
+    `;
+
+    libraryItems.appendChild(card);
+  });
+});
