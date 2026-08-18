@@ -8,3 +8,10 @@ const supabaseClient = supabase.createClient(
 );
 
 console.log("Culture Archive connected to Supabase");
+
+const showFormButton = document.getElementById("show-form-button");
+const uploadForm = document.getElementById("upload-form");
+
+showFormButton.addEventListener("click", () => {
+  uploadForm.style.display = "block";
+});
