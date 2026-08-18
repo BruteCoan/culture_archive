@@ -76,6 +76,37 @@ saveItemButton.addEventListener("click", async () => {
     alert("Something went wrong: " + error.message);
   }
 
+  async function loadLibrary() {
+  const libraryItems = document.getElementById("library-items");
+
+  const { data, error } = await supabaseClient
+    .from("media_items")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Could not load library:", error);
+    libraryItems.innerHTML = "<p>Could not load archive items.</p>";
+    return;
+  }
+
+  libraryItems.innerHTML = "";
+
+  data.forEach((item) => {
+    const card = document.createElement("div");
+
+    card.innerHTML = `
+      <h3>${item.title}</h3>
+      <p>${item.content_type}</p>
+      <p>${item.description || ""}</p>
+    `;
+
+    libraryItems.appendChild(card);
+  });
+}
+
+loadLibrary();
+
   saveItemButton.disabled = false;
   saveItemButton.textContent = "Add to Archive";
 });
