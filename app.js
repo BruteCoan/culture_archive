@@ -71,12 +71,16 @@ saveItemButton.addEventListener("click", async () => {
 
     uploadForm.style.display = "none";
 
-  } catch (error) {
+    } catch (error) {
     console.error(error);
     alert("Something went wrong: " + error.message);
   }
 
-  async function loadLibrary() {
+  saveItemButton.disabled = false;
+  saveItemButton.textContent = "Add to Archive";
+});
+
+async function loadLibrary() {
   const libraryItems = document.getElementById("library-items");
 
   const { data, error } = await supabaseClient
@@ -106,7 +110,3 @@ saveItemButton.addEventListener("click", async () => {
 }
 
 loadLibrary();
-
-  saveItemButton.disabled = false;
-  saveItemButton.textContent = "Add to Archive";
-});
