@@ -33,7 +33,33 @@
 
     <h2>Add to Archive</h2>
 
-    <button>Add New Item</button>
+    <button><button id="show-form-button">Add New Item</button>
+
+<section id="upload-form" style="display: none;">
+  <h2>Add New Item</h2>
+
+  <label for="item-title">Title</label>
+  <input type="text" id="item-title">
+
+  <label for="item-type">Type</label>
+  <select id="item-type">
+    <option value="image">Image</option>
+    <option value="audio">Audio</option>
+    <option value="video">Video</option>
+    <option value="writing">Writing</option>
+    <option value="poetry">Poetry</option>
+    <option value="lyrics">Lyrics</option>
+    <option value="pdf">PDF Book</option>
+  </select>
+
+  <label for="item-description">Description</label>
+  <textarea id="item-description"></textarea>
+
+  <label for="item-file">Choose File</label>
+  <input type="file" id="item-file">
+
+  <button id="save-item-button">Add to Archive</button>
+</section></button>
 
   </main>
 
