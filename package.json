@@ -1,0 +1,12 @@
+{
+  "name": "culture-archive-review",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Static Culture Archive review candidate with offline regression tests",
+  "scripts": {
+    "test": "node tests/dom-offline.cjs",
+    "test:browser": "node tests/offline.cjs",
+    "check": "node --check app.js && node --check tests/dom-offline.cjs && node --check tests/offline.cjs"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}

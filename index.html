@@ -1,71 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Culture Archive</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
-  
 <body>
-
-  <header>
-    <h1>Culture Archive</h1>
-    <p>A personal archive of media, writing, and collected works.</p>
-  </header>
-
-  <main>
-
-    <h2>Library</h2>
-
-    <section>
-      <button id="images-button">Images</button>
-      <button>Audio</button>
-      <button>Video</button>
-      <button>Writing</button>
-      <button>Poetry</button>
-      <button>Lyrics</button>
-      <button>PDF Books</button>
-    </section>
-
-<div id="library-items"></div>
-    
-    <button id="show-form-button">Add New Item</button>
-
-<section id="upload-form" style="display: none;">
-  <h2>Add New Item</h2>
-
-  <label for="item-title">Title</label>
-  <input type="text" id="item-title">
-
-  <label for="item-type">Type</label>
-  <select id="item-type">
-    <option value="image">Image</option>
-    <option value="audio">Audio</option>
-    <option value="video">Video</option>
-    <option value="writing">Writing</option>
-    <option value="poetry">Poetry</option>
-    <option value="lyrics">Lyrics</option>
-    <option value="pdf">PDF Book</option>
-  </select>
-
-  <label for="item-description">Description</label>
-  <textarea id="item-description"></textarea>
-
-  <label for="item-file">Choose File</label>
-  <input type="file" id="item-file">
-
-  <button id="save-item-button">Add to Archive</button>
-</section>
-
-  </main>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js"></script>
-  
+<header><h1>Culture Archive</h1><p>A personal archive of media, writing, and collected works.</p></header>
+<main>
+  <div class="section-heading"><h2>Library</h2><button id="refresh-button" type="button">Refresh</button></div>
+  <nav id="categories" aria-label="Filter by type">
+    <button type="button" data-type="all" aria-pressed="true">All</button>
+    <button type="button" data-type="image" aria-pressed="false">Images</button>
+    <button type="button" data-type="audio" aria-pressed="false">Audio</button>
+    <button type="button" data-type="video" aria-pressed="false">Video</button>
+    <button type="button" data-type="writing" aria-pressed="false">Writing</button>
+    <button type="button" data-type="poetry" aria-pressed="false">Poetry</button>
+    <button type="button" data-type="lyrics" aria-pressed="false">Lyrics</button>
+    <button type="button" data-type="pdf" aria-pressed="false">PDF Books</button>
+  </nav>
+  <label for="search">Search titles and descriptions</label>
+  <input id="search" type="search" placeholder="Search the archive…" maxlength="200">
+  <p id="library-status" role="status" aria-live="polite"></p>
+  <div id="library-items" aria-busy="false"></div>
+  <div class="add-area"><button id="show-form-button" class="primary" type="button" disabled aria-expanded="false" aria-controls="upload-form">Add New Item</button>
+  <p id="upload-availability" role="status" aria-live="polite">Uploads are paused pending owner access and storage-policy review.</p></div>
+  <form id="upload-form" hidden novalidate>
+    <h2>Add New Item</h2>
+    <fieldset id="item-fields">
+      <label for="item-title">Title</label><input id="item-title" aria-describedby="save-status" type="text" maxlength="200" required>
+      <label for="item-type">Type</label>
+      <select id="item-type" aria-describedby="save-status"><option value="image">Image</option><option value="audio">Audio</option><option value="video">Video</option><option value="writing">Writing</option><option value="poetry">Poetry</option><option value="lyrics">Lyrics</option><option value="pdf">PDF Book</option></select>
+      <label for="item-description">Description or text</label><textarea id="item-description" aria-describedby="save-status" rows="6" maxlength="20000"></textarea>
+      <label for="item-file">Choose file</label><input id="item-file" type="file" aria-describedby="file-help save-status">
+      <p id="file-help"></p>
+    </fieldset>
+    <details id="recovery-details" hidden><summary>Recovery details</summary><p>Keep this record until the owner has checked storage and the archive entry. Do not clear browser data or upload the same item again.</p><pre id="recovery-path"></pre></details>
+    <p id="save-status" role="status" aria-live="polite"></p>
+    <div class="form-actions"><button id="save-item-button" class="primary" type="submit">Add to Archive</button><button id="cancel-button" type="button">Cancel</button></div>
+  </form>
+  <noscript><p>JavaScript is needed to browse this archive.</p></noscript>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+<script src="config.js" defer></script><script src="app.js" defer></script>
 </body>
-
 </html>
